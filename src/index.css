@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-canvas: #FAF9F6;
+  --color-ecru: #F5F3EF;
+  --color-stone-border: #E8E4DD;
+  --color-bronze: #755723;
+  --color-bronze-soft: #A38048;
+  --color-bronze-light: #C49F60;
+  --color-sage: #446554;
+  --color-sage-soft: #6B8E7B;
+  --color-sage-wash: #EAF0EC;
+  --color-ink: #2D3748;
+  --color-ink-muted: #596579;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: #FAF9F6;
+    color: #2D3748;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+.liturgy-card-surface {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E4DD;
+  box-shadow: 0 4px 20px -2px rgba(45, 55, 72, 0.03);
+}
+
+.liturgy-card-active {
+  background-color: #FFFFFF;
+  border: 1px solid #A38048;
+  box-shadow: 0 8px 24px -4px rgba(163, 128, 72, 0.08);
+}
+
+.modal-surface-elevated {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E4DD;
+  box-shadow: 0 16px 36px -6px rgba(45, 55, 72, 0.08);
+}
+
+.memorial-input {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E4DD;
+  border-radius: 0.5rem;
+  color: #2D3748;
+  transition: border-color 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.memorial-input::placeholder {
+  color: rgba(89, 101, 121, 0.6);
+}
+
+.memorial-input:focus {
+  outline: none;
+  border-color: #A38048;
+  box-shadow: 0 0 0 3px rgba(163, 128, 72, 0.15);
+}
+
+.cameo-arch {
+  border-radius: 999px 999px 0.5rem 0.5rem;
+}
+
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #1A202C !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .liturgy-card-surface,
+  .liturgy-card-active {
+    box-shadow: none !important;
+    border-color: #D2C5B5 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Serene Grace Memorial",
+  "description": "Liturgi Ibadah Penghiburan & Kenangan Kasih — Digital memorial liturgy, hymnal accompaniment, life legacy, and condolence prayer wall.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
