@@ -2,16 +2,11 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  base: '/Liturgi-Penghiburan/',
-})
+import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/Liturgi-Penghiburan/',
     plugins: [
       react(),
       tailwindcss(),
@@ -29,7 +24,7 @@ export default defineConfig(() => {
           const srcAssets = path.resolve(__dirname, 'src/assets');
           const distAssets = path.resolve(distDir, 'src/assets');
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
-            fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
+            fs.cpSync(srcAssets, distAssets, { recursive: true, force: true });
           }
         },
       },
