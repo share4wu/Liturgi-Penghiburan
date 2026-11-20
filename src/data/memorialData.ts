@@ -1,3 +1,8 @@
+import chapelBannerImg from '../assets/images/chapel_botanical_banner_1795138788919.jpg';
+import gardenMemoryImg from '../assets/images/legacy_family_garden_1795138788378.jpg';
+import scriptureMemoryImg from '../assets/images/legacy_scripture_linen_1795138789553.jpg';
+import memorialPortraitImg from '../assets/images/memorial_portrait_1795138788896.jpg';
+
 export type SpeakerRole = 'Liturgos' | 'Pemimpin' | 'Jemaat' | 'Paduan Suara' | 'Pelayan Firman' | 'Keluarga';
 
 export interface ResponsivePart {
@@ -91,10 +96,10 @@ export const MEMORIAL_PROFILE = {
   birthPlace: 'Salatiga, Jawa Tengah',
   restingDate: '17 November 2026',
   ageAtPassing: '84 Tahun',
-  portraitUrl: '/src/assets/images/memorial_portrait_1795138788896.jpg',
-  chapelBannerUrl: '/src/assets/images/chapel_botanical_banner_1795138788919.jpg',
-  gardenMemoryUrl: '/src/assets/images/legacy_family_garden_1795138788378.jpg',
-  scriptureMemoryUrl: '/src/assets/images/legacy_scripture_linen_1795138789553.jpg',
+  portraitUrl: memorialPortraitImg,
+  chapelBannerUrl: chapelBannerImg,
+  gardenMemoryUrl: gardenMemoryImg,
+  scriptureMemoryUrl: scriptureMemoryImg,
   anchorVerse: {
     text: 'Aku telah mengakhiri pertandingan yang baik, aku telah mencapai garis akhir dan aku telah memelihara iman.',
     reference: '2 Timotius 4:7',

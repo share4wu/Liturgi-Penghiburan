@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar, Check, Clock, Copy, MapPin, X } from 'lucide-react';
 import { SERVICE_SCHEDULES } from '../data/memorialData';
 
@@ -10,11 +10,41 @@ interface ScheduleModalProps {
 export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleCopyAddress = async (id: string, address: string) => {
     try {
-      await navigator.clipboard.writeText(address);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(address);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = address;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
       setCopiedId(id);
       window.setTimeout(() => setCopiedId(null), 2200);
     } catch {
@@ -50,7 +80,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Tutup informasi jadwal"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-[#E8E4DD] text-[#596579] hover:text-[#2D3748] hover:bg-[#FAF9F6] transition-colors shrink-0"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border border-[#E8E4DD] text-[#596579] hover:text-[#2D3748] hover:bg-[#FAF9F6] transition-colors shrink-0 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -97,7 +127,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
                   <button
                     type="button"
                     onClick={() => handleCopyAddress(item.id, `${item.venue}, ${item.address}`)}
-                    className="min-h-[40px] px-3.5 rounded-lg border border-[#A38048] text-[#755723] text-[13px] font-semibold inline-flex items-center gap-2 hover:bg-[#A38048]/8 transition-colors"
+                    className="min-h-[40px] px-3.5 rounded-lg border border-[#A38048] text-[#755723] text-[13px] font-semibold inline-flex items-center gap-2 hover:bg-[#A38048]/8 transition-colors cursor-pointer"
                   >
                     {isCopied ? (
                       <>
@@ -124,7 +154,7 @@ export function ScheduleModal({ isOpen, onClose }: ScheduleModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="h-11 px-6 rounded-lg bg-[#755723] text-white text-[14px] font-semibold hover:bg-[#5d420f] transition-colors whitespace-nowrap"
+            className="h-11 px-6 rounded-lg bg-[#755723] text-white text-[14px] font-semibold hover:bg-[#5d420f] transition-colors whitespace-nowrap cursor-pointer"
           >
             Tutup
           </button>

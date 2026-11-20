@@ -5,10 +5,57 @@ import { SacredDivider } from './SacredDivider';
 
 interface HeroBannerProps {
   onOpenSchedule: () => void;
+  compact?: boolean;
 }
 
-export function HeroBanner({ onOpenSchedule }: HeroBannerProps) {
+export function HeroBanner({ onOpenSchedule, compact = false }: HeroBannerProps) {
   const [imgError, setImgError] = useState(false);
+
+  if (compact) {
+    return (
+      <section className="pt-6 pb-2 px-5 sm:px-8">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E8E4DD]">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-16 shrink-0 p-1 bg-white border border-[#C49F60] cameo-arch">
+              <div className="w-full h-full overflow-hidden cameo-arch bg-[#F5F3EF] flex items-center justify-center">
+                {!imgError ? (
+                  <img
+                    src={MEMORIAL_PROFILE.portraitUrl}
+                    alt={`Potret kenangan ${MEMORIAL_PROFILE.fullName}`}
+                    referrerPolicy="no-referrer"
+                    onError={() => setImgError(true)}
+                    className="w-full h-full object-cover object-top"
+                  />
+                ) : (
+                  <span className="font-serif text-sm text-[#755723]">MK</span>
+                )}
+              </div>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#755723]">
+                {MEMORIAL_PROFILE.honorific}
+              </p>
+              <h1 className="font-serif text-[20px] sm:text-[24px] font-semibold leading-tight text-[#2D3748]">
+                {MEMORIAL_PROFILE.fullName}
+              </h1>
+              <p className="text-[13px] text-[#596579] mt-0.5 tabular-nums">
+                {MEMORIAL_PROFILE.birthDate} · {MEMORIAL_PROFILE.restingDate}
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onOpenSchedule}
+            className="self-start sm:self-center inline-flex items-center gap-2 text-[13px] font-medium text-[#446554] hover:text-[#2D3748] underline decoration-[#6B8E7B]/40 underline-offset-4 transition-colors cursor-pointer"
+          >
+            <MapPin className="w-4 h-4 shrink-0" />
+            <span>{MEMORIAL_PROFILE.serviceSummary.venueLabel}</span>
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="pt-8 sm:pt-12 pb-6 px-5 sm:px-8">
@@ -75,7 +122,7 @@ export function HeroBanner({ onOpenSchedule }: HeroBannerProps) {
           <button
             type="button"
             onClick={onOpenSchedule}
-            className="flex items-center gap-2 text-[#446554] hover:text-[#2D3748] font-medium underline decoration-[#6B8E7B]/40 underline-offset-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A38048] rounded px-1"
+            className="flex items-center gap-2 text-[#446554] hover:text-[#2D3748] font-medium underline decoration-[#6B8E7B]/40 underline-offset-4 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A38048] rounded px-1"
           >
             <MapPin className="w-4 h-4 shrink-0" />
             <span>{MEMORIAL_PROFILE.serviceSummary.venueLabel}</span>

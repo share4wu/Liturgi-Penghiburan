@@ -1,5 +1,12 @@
 export type AppTab = 'liturgi' | 'riwayat' | 'kidung' | 'ucapan';
 
+export const TAB_HASH_MAP: Record<AppTab, string> = {
+  liturgi: '#/tata-ibadah',
+  riwayat: '#/riwayat-hidup',
+  kidung: '#/nyanyian-bacaan',
+  ucapan: '#/ucapan-doa',
+};
+
 interface TopBarProps {
   activeTab: AppTab;
   onSelectTab: (tab: AppTab) => void;
@@ -15,24 +22,31 @@ const NAV_ITEMS: { id: AppTab; label: string }[] = [
 
 export function TopBar({ activeTab, onSelectTab, onOpenSchedule }: TopBarProps) {
   return (
-    <header className="no-print sticky top-0 z-30 h-[56px] bg-[#FAF9F6]/92 backdrop-blur-md border-b border-[#E8E4DD]">
+    <header className="no-print sticky top-0 z-40 h-[56px] bg-[#FAF9F6]/95 backdrop-blur-md border-b border-[#E8E4DD]">
       <div className="max-w-6xl mx-auto h-full px-5 sm:px-8 flex items-center justify-between gap-8">
-        <button
-          type="button"
-          onClick={() => onSelectTab('liturgi')}
+        <a
+          href={TAB_HASH_MAP.liturgi}
+          onClick={(e) => {
+            e.preventDefault();
+            onSelectTab('liturgi');
+          }}
           className="font-serif text-lg sm:text-xl font-semibold tracking-tight text-[#2D3748] hover:text-[#755723] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A38048] rounded"
         >
           Serene Grace
-        </button>
+        </a>
 
         <nav className="hidden md:flex items-center gap-7" aria-label="Navigasi Ibadah">
           {NAV_ITEMS.map((item) => {
             const isActive = activeTab === item.id;
             return (
-              <button
+              <a
                 key={item.id}
-                type="button"
-                onClick={() => onSelectTab(item.id)}
+                href={TAB_HASH_MAP[item.id]}
+                aria-current={isActive ? 'page' : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onSelectTab(item.id);
+                }}
                 className={`relative py-1.5 text-sm font-medium whitespace-nowrap shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A38048] rounded ${
                   isActive
                     ? 'text-[#755723]'
@@ -46,7 +60,7 @@ export function TopBar({ activeTab, onSelectTab, onOpenSchedule }: TopBarProps) 
                     aria-hidden="true"
                   />
                 )}
-              </button>
+              </a>
             );
           })}
         </nav>
@@ -55,7 +69,7 @@ export function TopBar({ activeTab, onSelectTab, onOpenSchedule }: TopBarProps) 
           <button
             type="button"
             onClick={onOpenSchedule}
-            className="h-9 px-4 rounded-lg bg-[#755723] text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-[#5d420f] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A38048] focus-visible:ring-offset-2"
+            className="h-9 px-4 rounded-lg bg-[#755723] text-white text-xs sm:text-sm font-semibold tracking-wide hover:bg-[#5d420f] transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A38048] focus-visible:ring-offset-2"
           >
             Info Jadwal
           </button>
